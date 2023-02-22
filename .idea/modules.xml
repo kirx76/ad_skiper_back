@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../ad_skiper/.idea/ad_skiper.iml" filepath="$PROJECT_DIR$/../ad_skiper/.idea/ad_skiper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ad_skiper_back.iml" filepath="$PROJECT_DIR$/.idea/ad_skiper_back.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ad_skiper_react/.idea/ad_skiper_react.iml" filepath="$PROJECT_DIR$/../ad_skiper_react/.idea/ad_skiper_react.iml" />
+    </modules>
+  </component>
+</project>
