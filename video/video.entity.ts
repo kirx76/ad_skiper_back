@@ -1,17 +1,20 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm';
-import {SkipPhase} from '../skipPhase/skipPhase.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { SkipPhase } from "../skipPhase/skipPhase.entity";
 
 @Entity()
 export class Video {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    name: string;
+  @Column({ nullable: true })
+  name: string;
 
-    @Column()
-    url: string;
+  @Column()
+  hashID: string;
 
-    @OneToMany(() => SkipPhase, (skipPhase) => skipPhase.video)
-    skipPhases: SkipPhase[];
+  @Column()
+  url: string;
+
+  @OneToMany(() => SkipPhase, (skipPhase) => skipPhase.video)
+  skipPhases: SkipPhase[];
 }

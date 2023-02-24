@@ -1,14 +1,14 @@
 import * as express from "express";
 import Controller from "../interface";
-import {getRepository} from "typeorm";
-import {Video} from "./video.entity";
-import {SkipPhase} from "../skipPhase/skipPhase.entity";
-import {validationMiddleware} from "../middlewares";
+import { getRepository } from "typeorm";
+import { Video } from "./video.entity";
+import { SkipPhase } from "../skipPhase/skipPhase.entity";
+import { validationMiddleware } from "../middlewares";
 import CreateVideoDto from "./video.dto";
 import SkipPhaseDto from "../skipPhase/skipPhase.dto";
 
 export default class VideoController implements Controller {
-  public path = '/video'
+  public path = "/video";
   public router = express.Router();
   private videoRepository = getRepository(Video);
   private skipRepository = getRepository(SkipPhase);
@@ -26,18 +26,26 @@ export default class VideoController implements Controller {
     // this.router.get(this.path, this.getAllVideo);
     // this.router.get(`${this.path}/:hashID`, this.getVideoByHashID)
     // this.router.post(this.path, validationMiddleware(CreateVideoDto), this.createVideo);
-    this.router.post(this.path, validationMiddleware(CreateVideoDto), this.createVideo);
+    this.router.post(
+      this.path,
+      validationMiddleware(CreateVideoDto),
+      this.createVideo
+    );
     this.router.get(this.path, this.getVideo);
   }
 
-  private createVideo = async (request: express.Request, response: express.Response) => {
-    const {name, url, from, to} = request.body;
+  private createVideo = async (
+    request: express.Request,
+    response: express.Response
+  ) => {
+    const { name, url, from, to, hashID } = request.body;
 
-    let video = await this.videoRepository.findOne({url});
+    let video = await this.videoRepository.findOne({ hashID });
     if (!video) {
       video = new Video();
       video.name = name;
       video.url = url;
+      video.hashID = hashID;
       await this.videoRepository.save(video);
     }
 
@@ -47,18 +55,24 @@ export default class VideoController implements Controller {
     skipPhase.video = video;
     await this.skipRepository.save(skipPhase);
 
-    response.json({code: 201, result: 'Skip phase added successfully'});
-  }
+    response.json({ code: 201, result: "Skip phase added successfully" });
+  };
 
-  private getVideo = async (request: express.Request, response: express.Response) => {
-    const url = request.query.url as string;
-    const video = await this.videoRepository.findOne({url}, {relations: ['skipPhases']});
+  private getVideo = async (
+    request: express.Request,
+    response: express.Response
+  ) => {
+    const hashID = request.query.hashID as string;
+    const video = await this.videoRepository.findOne(
+      { hashID },
+      { relations: ["skipPhases"] }
+    );
     if (video) {
       response.json(video);
     } else {
-      response.json({code: 404, result: 'Video not found'});
+      response.json({ code: 404, result: "Video not found" });
     }
-  }
+  };
 
   // private createVideo = async (request: express.Request, response: express.Response) => {
   //   const postData: CreateVideoDto = request.body;

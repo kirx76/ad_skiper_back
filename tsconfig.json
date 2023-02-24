@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
     "sourceMap": true,
-    "target": "es2017",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "target": "es5",
     "outDir": "./dist",
     "baseUrl": "./src",
     "experimentalDecorators": true,
