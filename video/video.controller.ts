@@ -55,6 +55,10 @@ export default class VideoController implements Controller {
     skipPhase.video = video;
     await this.skipRepository.save(skipPhase);
 
+    response.setHeader(
+      "Access-Control-Allow-Origin",
+      "https://www.youtube.com"
+    );
     response.json({ code: 201, result: "Skip phase added successfully" });
   };
 
@@ -66,6 +70,10 @@ export default class VideoController implements Controller {
     const video = await this.videoRepository.findOne(
       { hashID },
       { relations: ["skipPhases"] }
+    );
+    response.setHeader(
+      "Access-Control-Allow-Origin",
+      "https://www.youtube.com"
     );
     if (video) {
       response.json(video);
